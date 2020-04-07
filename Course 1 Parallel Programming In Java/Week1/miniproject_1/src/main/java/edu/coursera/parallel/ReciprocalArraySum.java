@@ -155,15 +155,8 @@ public final class ReciprocalArraySum {
      * @return The sum of the reciprocals of the array input
      */
     protected static double parArraySum(final double[] input) {
-        ForkJoinPool forkJoinPool = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
         assert input.length % 2 == 0;
-        ReciprocalArraySumTask sumTask1 =
-                new ReciprocalArraySumTask(0, input.length / 2, input);
-        ReciprocalArraySumTask sumTask2 =
-                new ReciprocalArraySumTask((input.length / 2), input.length, input);
-        forkJoinPool.invoke(sumTask1);
-        forkJoinPool.invoke(sumTask2);
-        return sumTask1.getValue() + sumTask2.getValue();
+        return parManyTaskArraySum(input, 2);
     }
 
     /**
